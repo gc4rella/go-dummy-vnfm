@@ -31,7 +31,7 @@ func (h handl) Configure(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalog
 }
 
 func (h handl) HandleError(vnfr *catalogue.VirtualNetworkFunctionRecord) error {
-	h.Errorf("Error for VNFR %s\n", vnfr.Name)
+	h.Errorf("Error for VNFR %s", vnfr.Name)
 	return nil
 }
 
@@ -43,7 +43,7 @@ func (h handl) Heal(vnfr *catalogue.VirtualNetworkFunctionRecord,
 // Instantiate allows to create a VNF instance.
 func (h handl) Instantiate(vnfr *catalogue.VirtualNetworkFunctionRecord, scripts interface{},
 	vimInstances map[catalogue.ID][]*catalogue.VIMInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
-	h.Infof("Instantiating VNFR %v\n", vnfr)
+	h.Infof("Instantiating VNFR %v", vnfr)
 
 	vnfr.Configurations.Append(&catalogue.ConfigurationParameter{
 		ConfKey: "new_key",
@@ -59,14 +59,14 @@ func (h handl) Instantiate(vnfr *catalogue.VirtualNetworkFunctionRecord, scripts
 func (h handl) Modify(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	dependency *catalogue.VNFRecordDependency) (*catalogue.VirtualNetworkFunctionRecord, error) {
 
-	h.Debugf("VirtualNetworkFunctionRecord VERSION is: %d\n", vnfr.HbVersion)
-	h.Debugf("VirtualNetworkFunctionRecord NAME is: %s\n", vnfr.Name)
-	h.Debugf("Got dependency: %v\n", dependency)
+	h.Debugf("VirtualNetworkFunctionRecord VERSION is: %d", vnfr.HbVersion)
+	h.Debugf("VirtualNetworkFunctionRecord NAME is: %s", vnfr.Name)
+	h.Debugf("Got dependency: %v", dependency)
 
-	buf := bytes.NewBufferString("\n")
+	buf := bytes.NewBufferString("")
 
 	for key, value := range dependency.Parameters {
-		buf.WriteString(fmt.Sprintf("\t%s: %v\n", key, value.Parameters))
+		buf.WriteString(fmt.Sprintf("\t%s: %v", key, value.Parameters))
 	}
 
 	h.Debug("Parameters are: {%s}", buf.String())
@@ -84,7 +84,7 @@ func (h handl) Resume(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	vnfcInstance *catalogue.VNFCInstance,
 	dependency *catalogue.VNFRecordDependency) (*catalogue.VirtualNetworkFunctionRecord, error) {
 
-	h.Infof("resume on VNFR '%s' with ID: %v\n", vnfr.Name, vnfr.ID)
+	h.Infof("resume on VNFR '%s' with ID: %v", vnfr.Name, vnfr.ID)
 
 	return vnfr, nil
 }
@@ -96,7 +96,7 @@ func (h handl) Scale(scaleInOrOut catalogue.Action,
 	scripts interface{},
 	dependency *catalogue.VNFRecordDependency) (*catalogue.VirtualNetworkFunctionRecord, error) {
 
-	h.Infof("%v on VNFR %s with ID %v\n", scaleInOrOut, vnfr.Name, vnfr.ID)
+	h.Infof("%v on VNFR %s with ID %v", scaleInOrOut, vnfr.Name, vnfr.ID)
 
 	time.Sleep(3 * time.Second)
 
@@ -105,28 +105,28 @@ func (h handl) Scale(scaleInOrOut catalogue.Action,
 
 // Start starts a VNFR.
 func (h handl) Start(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
-	h.Infof("start VNFR: %s\n", vnfr.Name)
+	h.Infof("start VNFR: %s", vnfr.Name)
 	time.Sleep(3 * time.Second)
 	return vnfr, nil
 }
 
 func (h handl) StartVNFCInstance(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	vnfcInstance *catalogue.VNFCInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
-	h.Infof("start VNFCInstance '%s' with ID: %v\n", vnfcInstance.Hostname, vnfcInstance.ID)
+	h.Infof("start VNFCInstance '%s' with ID: %v", vnfcInstance.Hostname, vnfcInstance.ID)
 
 	return vnfr, nil
 }
 
 // Stop stops a previously created VNF instance.
 func (h handl) Stop(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
-	h.Infof("stop VNFR: %s\n", vnfr.Name)
+	h.Infof("stop VNFR: %s", vnfr.Name)
 	//time.Sleep(3 * time.Second)
 	return vnfr, nil
 }
 
 func (h handl) StopVNFCInstance(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	vnfcInstance *catalogue.VNFCInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
-	h.Infof("stop VNFCInstance '%s' with ID: %v\n", vnfcInstance.Hostname, vnfcInstance.ID)
+	h.Infof("stop VNFCInstance '%s' with ID: %v", vnfcInstance.Hostname, vnfcInstance.ID)
 
 	return vnfr, nil
 }
@@ -134,13 +134,13 @@ func (h handl) StopVNFCInstance(vnfr *catalogue.VirtualNetworkFunctionRecord,
 // Terminate allows terminating gracefully or forcefully a previously created VNF instance.
 func (h handl) Terminate(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.Debugln("RELEASE_RESOURCES")
-	h.Infof("Releasing resources for VNFR: %s\n", vnfr.Name)
-	h.Debugf("Version is: %d\n", vnfr.HbVersion)
+	h.Infof("Releasing resources for VNFR: %s", vnfr.Name)
+	h.Debugf("Version is: %d", vnfr.HbVersion)
 
 	for _, event := range vnfr.LifecycleEvents {
 		if event.Event == catalogue.EventRelease {
 			for _, vdu := range vnfr.VDUs {
-				h.Debugf("Removing vdu: %v\n", vdu)
+				h.Debugf("Removing vdu: %v", vdu)
 
 				time.Sleep(3 * time.Second)
 			}
@@ -153,7 +153,7 @@ func (h handl) Terminate(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalog
 // UpdateSoftware allows applying a minor / limited software update(e.g.patch) to a VNF instance.
 func (h handl) UpdateSoftware(script *catalogue.Script,
 	vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
-	h.Infof("Update software with script %v on VNFR %s with ID %v\n", script, vnfr.Name, vnfr.ID)
+	h.Infof("Update software with script %v on VNFR %s with ID %v", script, vnfr.Name, vnfr.ID)
 
 	time.Sleep(3 * time.Second)
 
