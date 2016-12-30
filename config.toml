@@ -1,0 +1,17 @@
+﻿[vnfm]
+type = dummy
+endpoint = dummy-endpoint
+description = Dummy Go VNFM
+allocate = false
+timeout = 2
+log-level = DEBUG
+
+[amqp]
+host = localhost
+username = admin
+password = openbaton
+exchange = {
+  name = "openbaton-exchange",
+  durable = true
+}
+
