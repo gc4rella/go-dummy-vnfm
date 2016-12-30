@@ -1,4 +1,4 @@
-﻿[vnfm]
+[vnfm]
 type = dummy
 endpoint = dummy-endpoint
 description = Dummy Go VNFM
