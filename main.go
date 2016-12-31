@@ -40,7 +40,7 @@ func main() {
 		l := svc.Logger()
 		l.Warnln("interrupt signal received, quitting")
 		if err := svc.Stop(); err != nil {
-			l.Fatalf("while stopping service: %v", err)
+			l.Fatalf("stopping service failed: %v", err)
 		}
 
 		os.Exit(0)
