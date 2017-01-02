@@ -38,6 +38,8 @@ func main() {
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt)
 
+	join := make(chan struct{})
+
 	go func() {
 		<-sigChan
 
@@ -51,6 +53,8 @@ func main() {
 				"err": err,
 			}).Fatal("stopping service failed")
 		}
+
+		close(join)
 	}()
 
 	if err = svc.Serve(); err != nil {
@@ -59,6 +63,8 @@ func main() {
 			"err": err,
 		}).Fatal("VNFM failed during execution")
 	}
+
+	<-join
 
 	l.WithFields(log.Fields{
 		"tag": "dummy-main",
