@@ -3,9 +3,10 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"time"
+
 	"github.com/mcilloni/go-openbaton/catalogue"
 	log "github.com/sirupsen/logrus"
-	"time"
 )
 
 type handl struct {
@@ -32,20 +33,20 @@ func (h handl) Configure(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalog
 
 func (h handl) HandleError(vnfr *catalogue.VirtualNetworkFunctionRecord) error {
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-error",
+		"tag":       "dummy-handl-error",
 		"vnfm-name": vnfr.Name,
 	}).Error("error for VNFR")
-	
+
 	return nil
 }
 
 func (h handl) Heal(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	component *catalogue.VNFCInstance, cause string) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-heal",
+		"tag":       "dummy-handl-heal",
 		"vnfr-name": vnfr.Name,
 	}).Info("handling heal")
-	
+
 	return vnfr, nil
 }
 
@@ -53,7 +54,7 @@ func (h handl) Heal(vnfr *catalogue.VirtualNetworkFunctionRecord,
 func (h handl) Instantiate(vnfr *catalogue.VirtualNetworkFunctionRecord, scripts interface{},
 	vimInstances map[catalogue.ID][]*catalogue.VIMInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-instantiate",
+		"tag":  "dummy-handl-instantiate",
 		"vnfr": vnfr,
 	}).Info("instantiating VNFR")
 
@@ -78,10 +79,10 @@ func (h handl) Modify(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	}
 
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-modify",
-		"vnfr-hb_version": vnfr.HbVersion,
-		"vnfr-name": vnfr.Name,
-		"vnfr-dependency": dependency,
+		"tag":                        "dummy-handl-modify",
+		"vnfr-hb_version":            vnfr.HbVersion,
+		"vnfr-name":                  vnfr.Name,
+		"vnfr-dependency":            dependency,
 		"vnfr-depencency-parameters": buf.String(),
 	}).Info("modifying VNFR")
 
@@ -103,9 +104,9 @@ func (h handl) Resume(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	dependency *catalogue.VNFRecordDependency) (*catalogue.VirtualNetworkFunctionRecord, error) {
 
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-resume",
-		"vnfr-name": vnfr.Name, 
-		"vnfr-id": vnfr.ID,
+		"tag":       "dummy-handl-resume",
+		"vnfr-name": vnfr.Name,
+		"vnfr-id":   vnfr.ID,
 	}).Info("resuming VNFR")
 
 	return vnfr, nil
@@ -119,10 +120,10 @@ func (h handl) Scale(scaleInOrOut catalogue.Action,
 	dependency *catalogue.VNFRecordDependency) (*catalogue.VirtualNetworkFunctionRecord, error) {
 
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-scale",
-		"vnfr-name": vnfr.Name, 
-		"vnfr-id": vnfr.ID,
-		"action": scaleInOrOut,
+		"tag":       "dummy-handl-scale",
+		"vnfr-name": vnfr.Name,
+		"vnfr-id":   vnfr.ID,
+		"action":    scaleInOrOut,
 	}).Info("scaling VNFR")
 
 	time.Sleep(3 * time.Second)
@@ -133,10 +134,10 @@ func (h handl) Scale(scaleInOrOut catalogue.Action,
 // Start starts a VNFR.
 func (h handl) Start(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-start",
+		"tag":       "dummy-handl-start",
 		"vnfr-name": vnfr.Name,
 	}).Info("starting VNFR")
-	
+
 	time.Sleep(3 * time.Second)
 	return vnfr, nil
 }
@@ -145,9 +146,9 @@ func (h handl) StartVNFCInstance(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	vnfcInstance *catalogue.VNFCInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
 
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-start_vnfc_instance",
+		"tag":                "dummy-handl-start_vnfc_instance",
 		"vnfc_instance-name": vnfcInstance.Hostname,
-		"vnfc_instance-id": vnfcInstance.ID,
+		"vnfc_instance-id":   vnfcInstance.ID,
 	}).Info("starting VNFCInstance")
 
 	return vnfr, nil
@@ -156,10 +157,10 @@ func (h handl) StartVNFCInstance(vnfr *catalogue.VirtualNetworkFunctionRecord,
 // Stop stops a previously created VNF instance.
 func (h handl) Stop(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-stop",
+		"tag":       "dummy-handl-stop",
 		"vnfr-name": vnfr.Name,
 	}).Info("stopping VNFR")
-	
+
 	//time.Sleep(3 * time.Second)
 	return vnfr, nil
 }
@@ -168,9 +169,9 @@ func (h handl) StopVNFCInstance(vnfr *catalogue.VirtualNetworkFunctionRecord,
 	vnfcInstance *catalogue.VNFCInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
 
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-stop_vnfc_instance",
+		"tag":                "dummy-handl-stop_vnfc_instance",
 		"vnfc_instance-name": vnfcInstance.Hostname,
-		"vnfc_instance-id": vnfcInstance.ID,
+		"vnfc_instance-id":   vnfcInstance.ID,
 	}).Info("stopping VNFCInstance")
 
 	return vnfr, nil
@@ -179,8 +180,8 @@ func (h handl) StopVNFCInstance(vnfr *catalogue.VirtualNetworkFunctionRecord,
 // Terminate allows terminating gracefully or forcefully a previously created VNF instance.
 func (h handl) Terminate(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-terminate",
-		"vnfr-name": vnfr.Name,
+		"tag":             "dummy-handl-terminate",
+		"vnfr-name":       vnfr.Name,
 		"vnfr-hb_version": vnfr.HbVersion,
 	}).Info("terminating VNFR")
 
@@ -188,9 +189,9 @@ func (h handl) Terminate(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalog
 		if event.Event == catalogue.EventRelease {
 			for _, vdu := range vnfr.VDUs {
 				h.WithFields(log.Fields{
-					"tag": "dummy-handl-terminate",
+					"tag":       "dummy-handl-terminate",
 					"vnfr-name": vnfr.Name,
-					"vdu": vdu,
+					"vdu":       vdu,
 				}).Debug("removing VDU")
 
 				time.Sleep(3 * time.Second)
@@ -205,10 +206,10 @@ func (h handl) Terminate(vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalog
 func (h handl) UpdateSoftware(script *catalogue.Script,
 	vnfr *catalogue.VirtualNetworkFunctionRecord) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.WithFields(log.Fields{
-		"tag": "dummy-handl-update_software",
-		"script": script,
+		"tag":       "dummy-handl-update_software",
+		"script":    script,
 		"vnfr-name": vnfr.Name,
-		"vnfr-id": vnfr.ID,
+		"vnfr-id":   vnfr.ID,
 	}).Info("updating software for VNFR")
 
 	time.Sleep(3 * time.Second)

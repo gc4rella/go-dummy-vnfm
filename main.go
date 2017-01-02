@@ -9,6 +9,7 @@ import (
 	"github.com/mcilloni/go-openbaton/vnfm"
 	_ "github.com/mcilloni/go-openbaton/vnfm/amqp" // import needed to load the driver
 	"github.com/mcilloni/go-openbaton/vnfm/config"
+	log "github.com/sirupsen/logrus"
 )
 
 var confPath = flag.String("cfg", "config.toml", "a TOML file to be loaded as config")
@@ -30,29 +31,37 @@ func main() {
 		os.Exit(1)
 	}
 
-	h.Logger = svc.Logger()
+	l := svc.Logger()
+	h.Logger = l
 
 	sigChan := make(chan os.Signal, 1)
 	signal.Notify(sigChan, os.Interrupt)
 
 	go func() {
 		<-sigChan
-		l := svc.Logger()
-		l.Warnln("interrupt signal received, quitting")
+
+		l.WithFields(log.Fields{
+			"tag": "dummy-main-sigint_callback",
+		}).Warn("interrupt signal received, quitting")
+
 		if err := svc.Stop(); err != nil {
-			l.Fatalf("stopping service failed: %v", err)
+			l.WithFields(log.Fields{
+				"tag": "dummy-main-sigint_callback",
+				"err": err,
+			}).Fatal("stopping service failed")
 		}
+
+		l.WithFields(log.Fields{
+			"tag": "dummy-main-sigint_callback",
+		}).Info("exiting cleanly")
 
 		os.Exit(0)
 	}()
 
 	if err = svc.Serve(); err != nil {
-		fmt.Fprintf(os.Stderr, "error: while VNFM was starting: %v\n", err)
-		os.Exit(1)
-	}
-
-	if err = svc.Stop(); err != nil {
-		fmt.Fprintf(os.Stderr, "error: while VNFM was stopping: %v\n", err)
-		os.Exit(1)
+		l.WithFields(log.Fields{
+			"tag": "dummy-main",
+			"err": err,
+		}).Fatal("VNFM failed to start")
 	}
 }
