@@ -32,6 +32,7 @@ func main() {
 	}
 
 	l := svc.Logger()
+
 	h.Logger = l
 
 	sigChan := make(chan os.Signal, 1)
@@ -50,18 +51,16 @@ func main() {
 				"err": err,
 			}).Fatal("stopping service failed")
 		}
-
-		l.WithFields(log.Fields{
-			"tag": "dummy-main-sigint_callback",
-		}).Info("exiting cleanly")
-
-		os.Exit(0)
 	}()
 
 	if err = svc.Serve(); err != nil {
 		l.WithFields(log.Fields{
 			"tag": "dummy-main",
 			"err": err,
-		}).Fatal("VNFM failed to start")
+		}).Fatal("VNFM failed during execution")
 	}
+
+	l.WithFields(log.Fields{
+		"tag": "dummy-main",
+	}).Info("exiting cleanly")
 }

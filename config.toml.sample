@@ -4,7 +4,10 @@ endpoint = "dummy-endpoint"
 description = "Dummy Go VNFM"
 allocate = false
 timeout = 2000
-log-level = "DEBUG"
+
+    [vnfm.logger]
+    level = "DEBUG"
+    use-colors = true
 
 [amqp]
 host = "localhost"
