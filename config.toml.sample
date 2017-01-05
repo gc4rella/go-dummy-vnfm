@@ -2,11 +2,10 @@
 type = "dummy"
 endpoint = "dummy-endpoint"
 description = "Dummy Go VNFM"
-allocate = false
 timeout = 2000
 
     [vnfm.logger]
-    level = "DEBUG"
+    level = "INFO"
     use-colors = true
 
 [amqp]

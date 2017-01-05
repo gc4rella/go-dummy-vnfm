@@ -52,10 +52,10 @@ func (h handl) Heal(vnfr *catalogue.VirtualNetworkFunctionRecord,
 
 // Instantiate allows to create a VNF instance.
 func (h handl) Instantiate(vnfr *catalogue.VirtualNetworkFunctionRecord, scripts interface{},
-	vimInstances map[catalogue.ID][]*catalogue.VIMInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
+	vimInstances map[string][]*catalogue.VIMInstance) (*catalogue.VirtualNetworkFunctionRecord, error) {
 	h.WithFields(log.Fields{
 		"tag":  "dummy-handl-instantiate",
-		"vnfr": vnfr,
+		"vnfr-name": vnfr.Name,
 	}).Info("instantiating VNFR")
 
 	vnfr.Configurations.Append(&catalogue.ConfigurationParameter{
@@ -65,6 +65,15 @@ func (h handl) Instantiate(vnfr *catalogue.VirtualNetworkFunctionRecord, scripts
 
 	time.Sleep(3 * time.Second)
 
+	/*if vnfr.Name == "dummy-client" {
+		h.WithFields(log.Fields{
+			"tag":  "dummy-handl-instantiate",
+			"vnfr-name": vnfr.Name,
+		}).Info("purposefully delaying VNFR")
+
+		time.Sleep(3 * time.Second)
+	}*/
+	
 	return vnfr, nil
 }
 
@@ -83,7 +92,7 @@ func (h handl) Modify(vnfr *catalogue.VirtualNetworkFunctionRecord,
 		"vnfr-hb_version":            vnfr.HbVersion,
 		"vnfr-name":                  vnfr.Name,
 		"vnfr-dependency":            dependency,
-		"vnfr-depencency-parameters": buf.String(),
+		"vnfr-dependency-parameters": buf.String(),
 	}).Info("modifying VNFR")
 
 	time.Sleep(3 * time.Second)
