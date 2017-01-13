@@ -28,6 +28,8 @@ The VNFM must be configured using a configuration file, specified through the `-
 
 In case no such flag is specified, the default behaviour is to search in the current directory for a file named `config.toml`.
 
+Follow the [tutorial] to learn how to use the dummy VNFM.
+
 ## How to configure `go-dummy-vnfm`
 
 The sample configuration should work straight out of the box with a standard local setup of OpenBaton.
@@ -69,3 +71,4 @@ Apache License, Version 2.0. See LICENSE for further details.
 [sample-conf]: https://raw.githubusercontent.com/mcilloni/go-dummy-vnfm/master/config.toml.sample
 [go-openbaton]: http://github.com/mcilloni/go-openbaton
 [dummy-vnfm-amqp]: https://github.com/openbaton/dummy-vnfm-amqp
+[tutorial]: https://openbaton.github.io/documentation/dummy-NSR
