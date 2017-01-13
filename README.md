@@ -26,7 +26,7 @@ The `go` tool will automatically fetch and build both the sources and their depe
 
 The VNFM must be configured using a configuration file, specified through the `--cfg` flag (see [the sample configuration for further details](https://raw.githubusercontent.com/mcilloni/go-dummy-vnfm/master/config.toml.sample)).
 
-In case no such flag is specified, the default is to search in the current directory for a file named `config.toml`.
+In case no such flag is specified, the default behaviour is to search in the current directory for a file named `config.toml`.
 
 ## How to configure `go-dummy-vnfm`
 
