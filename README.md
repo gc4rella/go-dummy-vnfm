@@ -1,9 +1,9 @@
 # Go Dummy VNFM (AMQP)
-`go-dummy-vnfm` is a sample Virtual Network Function Manager implementation for [OpenBaton](http://openbaton.github.io), written using Go and [go-openbaton](http://github.com/mcilloni/go-openbaton).
+`go-dummy-vnfm` is a sample Virtual Network Function Manager implementation for [OpenBaton][openbaton], written using Go and [go-openbaton].
 
-The Go Dummy VNFM behaves similarly to the [Java Dummy AMQP VNFM](https://github.com/openbaton/dummy-vnfm-amqp) and can be considered a drop-in replacement.
+The Go Dummy VNFM behaves similarly to the [Java Dummy AMQP VNFM][dummy-vnfm-amqp] and can be considered a drop-in replacement.
 
-The two behave exactly the same. The VNFM will connect through AMQP and will grant every request sent by the NFVO, using the `test` VIM.
+The two behave exactly the same. The VNFM will connect through AMQP and will grant every request sent by the NFVO, using the `test` VIMDriver.
 
 ## Technical Requirements
 
@@ -24,7 +24,7 @@ The `go` tool will automatically fetch and build both the sources and their depe
  go-dummy-vnfm --cfg /path/to/config.toml
  ```
 
-The VNFM must be configured using a configuration file, specified through the `--cfg` flag (see [the sample configuration for further details](https://raw.githubusercontent.com/mcilloni/go-dummy-vnfm/master/config.toml.sample)).
+The VNFM must be configured using a configuration file, specified through the `--cfg` flag (see [the sample configuration for further details]()).
 
 In case no such flag is specified, the default behaviour is to search in the current directory for a file named `config.toml`.
 
@@ -54,7 +54,7 @@ It can be combined with additional components (Monitoring, Fault Management, Aut
 
 ## Source Code and documentation
 
-The Source Code of the other Open Baton projects can be found [here][openbaton-github] and the documentation can be found [here][openbaton-doc]
+The Source Code of the other Open Baton projects can be found [on their GitHub page][openbaton-github], and the documentation can be found [on the official website][openbaton-doc].
 
 ## News and Website
 
@@ -62,3 +62,10 @@ Check the [Open Baton Website][openbaton]
 
 ## Licensing and distribution
 Apache License, Version 2.0. See LICENSE for further details.
+
+[openbaton]: http://openbaton.org
+[openbaton-doc]: http://openbaton.org/documentation
+[openbaton-github]: http://github.org/openbaton
+[sample-conf]: https://raw.githubusercontent.com/mcilloni/go-dummy-vnfm/master/config.toml.sample
+[go-openbaton]: http://github.com/mcilloni/go-openbaton
+[dummy-vnfm-amqp]: https://github.com/openbaton/dummy-vnfm-amqp
