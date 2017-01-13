@@ -32,7 +32,7 @@ In case no such flag is specified, the default behaviour is to search in the cur
 
 The sample configuration should work straight out of the box with a standard local setup of OpenBaton.
 
-`vnfm.logger.level` allowss to change the default verbosity of the logger, choosing a value between `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL` and `PANIC`.
+`vnfm.logger.level` can be used to change the default verbosity of the logger, choosing a value between `DEBUG`, `INFO`, `WARN`, `ERROR`, `FATAL` and `PANIC`.
 
 ## How to extend `go-dummy-vnfm`
 
