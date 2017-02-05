@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/mcilloni/go-openbaton/catalogue"
+	"github.com/openbaton/go-openbaton/catalogue"
 	log "github.com/sirupsen/logrus"
 )
 

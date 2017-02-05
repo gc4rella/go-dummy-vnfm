@@ -6,9 +6,9 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/mcilloni/go-openbaton/vnfm"
-	_ "github.com/mcilloni/go-openbaton/vnfm/amqp" // import needed to load the driver
-	"github.com/mcilloni/go-openbaton/vnfm/config"
+	"github.com/openbaton/go-openbaton/vnfm"
+	_ "github.com/openbaton/go-openbaton/vnfm/amqp" // import needed to load the driver
+	"github.com/openbaton/go-openbaton/vnfm/config"
 	log "github.com/sirupsen/logrus"
 )
 
